@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+interface IUserInfo {
+  name: string;
+}
+
+const App = () => {
+  const initialUserInfo: IUserInfo = { name: '' };
+  const [userInfo, setUserInfo] = useState<IUserInfo>(initialUserInfo);
+
+  // handle change event of the input element
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({ name: event.target.value });
+  }
+
+  // handle button click event
+  const handleClick = () => {
+    setUserInfo({ name: 'Danish' });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+      {/* Display the user name */}
+      {userInfo && userInfo.name}<br/>
+      {/* Render button only when userInfo is defined */}
+      {userInfo && <button onClick={handleClick}>Click</button>}
+      {/* Render input only when userInfo is defined */}
+      {userInfo && <input type="text" onChange={handleNameChange} />}
     </div>
   );
 }
